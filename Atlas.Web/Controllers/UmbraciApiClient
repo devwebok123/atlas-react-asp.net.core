@@ -1,0 +1,4800 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Atlas Umbraco Api"
+  },
+  "host": "atlasumbraco.local",
+  "schemes": [ "http" ],
+  "paths": {
+    "/umbraco/Api/ContentApi/Countries/{id}": {
+      "get": {
+        "tags": [ "ContentApi" ],
+        "operationId": "ContentApi_Countries",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/CountryViewModel" }
+            }
+          }
+        }
+      }
+    },
+    "/umbraco/Api/ContentApi/Analysis/{id}": {
+      "get": {
+        "tags": [ "ContentApi" ],
+        "operationId": "ContentApi_Analysis",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/AnalysisViewModel" }
+            }
+          }
+        }
+      }
+    },
+    "/umbraco/Api/ContentApi/Organisations/{id}": {
+      "get": {
+        "tags": [ "ContentApi" ],
+        "operationId": "ContentApi_Organisations",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/OrganisationViewModel" }
+            }
+          }
+        }
+      }
+    },
+    "/umbraco/Api/ContentApi/Incidents/{id}": {
+      "get": {
+        "tags": [ "ContentApi" ],
+        "operationId": "ContentApi_Incidents",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Incident" }
+            }
+          }
+        }
+      }
+    },
+    "/umbraco/Api/KeepAlive/Ping/{id}": {
+      "get": {
+        "tags": [ "KeepAlive" ],
+        "operationId": "KeepAlive_Ping",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/KeepAlivePingResult" }
+          }
+        }
+      }
+    },
+    "/umbraco/Api/UserApi/GetUserByEmailAndPassword/{id}": {
+      "get": {
+        "tags": [ "UserApi" ],
+        "operationId": "UserApi_GetUserByEmailAndPassword",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/UserViewModel" }
+          }
+        }
+      }
+    },
+    "/umbraco/Api/UserApi/GetUsers/{id}": {
+      "get": {
+        "tags": [ "UserApi" ],
+        "operationId": "UserApi_GetUsers",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/UserViewModel" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "KeyValuePair[String,String]": {
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "value": { "type": "string" }
+      }
+    },
+    "TreeRootNode": {
+      "required": [ "name", "id" ],
+      "type": "object",
+      "properties": {
+        "isContainer": { "type": "boolean" },
+        "isGroup": { "type": "boolean" },
+        "containsGroups": { "type": "boolean" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TreeNode" }
+        },
+        "containsTrees": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "parentId": { "type": "object" },
+        "hasChildren": { "type": "boolean" },
+        "nodeType": { "type": "string" },
+        "routePath": { "type": "string" },
+        "childNodesUrl": { "type": "string" },
+        "menuUrl": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "cssClasses": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "TreeNode": {
+      "required": [ "name", "id" ],
+      "type": "object",
+      "properties": {
+        "parentId": { "type": "object" },
+        "hasChildren": { "type": "boolean" },
+        "nodeType": { "type": "string" },
+        "routePath": { "type": "string" },
+        "childNodesUrl": { "type": "string" },
+        "menuUrl": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "cssClasses": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "UserDisplay": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "navigation": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EditorNavigation" }
+        },
+        "availableCultures": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "startContentIds": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EntityBasic" }
+        },
+        "startMediaIds": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EntityBasic" }
+        },
+        "resetPasswordValue": { "type": "string" },
+        "calculatedStartContentIds": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EntityBasic" }
+        },
+        "calculatedStartMediaIds": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EntityBasic" }
+        },
+        "failedPasswordAttempts": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "lastLockoutDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastPasswordChangeDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "username": { "type": "string" },
+        "emailHash": { "type": "string" },
+        "lastLoginDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "avatars": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "userState": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, -1 ],
+          "type": "integer"
+        },
+        "culture": { "type": "string" },
+        "email": { "type": "string" },
+        "userGroups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/UserGroupBasic" }
+        },
+        "isCurrentUser": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "EditorNavigation": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "icon": { "type": "string" },
+        "view": { "type": "string" },
+        "active": { "type": "boolean" }
+      }
+    },
+    "EntityBasic": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "UserGroupBasic": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "sections": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Section" }
+        },
+        "contentStartNode": { "$ref": "#/definitions/EntityBasic" },
+        "mediaStartNode": { "$ref": "#/definitions/EntityBasic" },
+        "userCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isSystemUserGroup": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "Notification": {
+      "type": "object",
+      "properties": {
+        "header": { "type": "string" },
+        "message": { "type": "string" },
+        "type": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4 ],
+          "type": "integer"
+        }
+      }
+    },
+    "Section": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "routePath": { "type": "string" }
+      }
+    },
+    "UnLinkLoginModel": {
+      "required": [ "LoginProvider", "ProviderKey" ],
+      "type": "object",
+      "properties": {
+        "LoginProvider": { "type": "string" },
+        "ProviderKey": { "type": "string" }
+      }
+    },
+    "UserDetail": {
+      "required": [ "email", "locale", "id", "name" ],
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "locale": { "type": "string" },
+        "emailHash": { "type": "string" },
+        "userGroups": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "remainingAuthSeconds": {
+          "format": "double",
+          "type": "number"
+        },
+        "startContentIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "startMediaIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "avatars": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "allowedSections": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": { "type": "string" }
+      }
+    },
+    "LoginModel": {
+      "required": [ "Username", "Password" ],
+      "type": "object",
+      "properties": {
+        "Username": { "type": "string" },
+        "Password": {
+          "maxLength": 256,
+          "minLength": 0,
+          "type": "string"
+        },
+        "RedirectUrl": { "type": "string" }
+      }
+    },
+    "RequestPasswordResetModel": {
+      "required": [ "email" ],
+      "type": "object",
+      "properties": { "email": { "type": "string" } }
+    },
+    "Verify2FACodeModel": {
+      "required": [ "code", "provider" ],
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "provider": { "type": "string" }
+      }
+    },
+    "SetPasswordModel": {
+      "required": [ "userId", "password", "resetCode" ],
+      "type": "object",
+      "properties": {
+        "userId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "password": { "type": "string" },
+        "resetCode": { "type": "string" }
+      }
+    },
+    "CodeFileDisplay": {
+      "type": "object",
+      "properties": {
+        "virtualPath": { "type": "string" },
+        "path": { "type": "string" },
+        "name": { "type": "string" },
+        "content": { "type": "string" },
+        "fileType": { "type": "string" },
+        "snippet": { "type": "string" },
+        "id": { "type": "string" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        }
+      }
+    },
+    "SnippetDisplay": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "fileName": { "type": "string" }
+      }
+    },
+    "StylesheetData": {
+      "type": "object",
+      "properties": {
+        "Content": { "type": "string" },
+        "Rules": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/StylesheetRule" }
+        }
+      }
+    },
+    "StylesheetRule": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "selector": { "type": "string" },
+        "styles": { "type": "string" }
+      }
+    },
+    "ContentItemDisplay": {
+      "required": [ "id", "parentId", "contentTypeAlias" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "variants": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentVariantDisplay" }
+        },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeName": { "type": "string" },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "isChildOfListView": { "type": "boolean" },
+        "treeNodeUrl": { "type": "string" },
+        "contentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contentTypeKey": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "template": { "type": "string" },
+        "templateId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "allowedTemplates": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "documentType": { "$ref": "#/definitions/ContentTypeBasic" },
+        "urls": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/UrlInfo" }
+        },
+        "allowPreview": { "type": "boolean" },
+        "allowedActions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "isBlueprint": { "type": "boolean" },
+        "apps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentApp" }
+        },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "ModelState": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "ContentVariantDisplay": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "displayName": { "type": "string" },
+        "tabs": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Tab[ContentPropertyDisplay]" }
+        },
+        "language": { "$ref": "#/definitions/Language" },
+        "segment": { "type": "string" },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "publishDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "releaseDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "expireDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        }
+      }
+    },
+    "UserProfile": {
+      "required": [ "id", "name" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": { "type": "string" }
+      }
+    },
+    "ContentTypeBasic": {
+      "required": [ "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "thumbnailIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "thumbnailFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blueprints": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "UrlInfo": {
+      "type": "object",
+      "properties": {
+        "culture": {
+          "type": "string",
+          "readOnly": true
+        },
+        "isUrl": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "text": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "ContentApp": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "weight": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "icon": { "type": "string" },
+        "view": { "type": "string" },
+        "viewModel": { "type": "object" },
+        "active": { "type": "boolean" },
+        "badge": { "$ref": "#/definitions/ContentAppBadge" }
+      }
+    },
+    "Tab[ContentPropertyDisplay]": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "active": { "type": "boolean" },
+        "label": { "type": "string" },
+        "alias": { "type": "string" },
+        "open": { "type": "boolean" },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentPropertyDisplay" }
+        }
+      }
+    },
+    "Language": {
+      "required": [ "culture" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "culture": { "type": "string" },
+        "name": { "type": "string" },
+        "isDefault": { "type": "boolean" },
+        "isMandatory": { "type": "boolean" },
+        "fallbackLanguageId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ContentAppBadge": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "type": {
+          "enum": [ "default", "warning", "alert" ],
+          "type": "string"
+        }
+      }
+    },
+    "ContentPropertyDisplay": {
+      "required": [ "label", "view", "id", "alias" ],
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "view": { "type": "string" },
+        "config": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "hideLabel": { "type": "boolean" },
+        "labelOnTop": { "type": "boolean" },
+        "validation": { "$ref": "#/definitions/PropertyTypeValidation" },
+        "readonly": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeKey": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "value": { "type": "object" },
+        "alias": { "type": "string" },
+        "editor": { "type": "string" },
+        "isSensitive": { "type": "boolean" },
+        "culture": { "type": "string" },
+        "segment": { "type": "string" }
+      }
+    },
+    "PropertyTypeValidation": {
+      "type": "object",
+      "properties": {
+        "mandatory": { "type": "boolean" },
+        "mandatoryMessage": { "type": "string" },
+        "pattern": { "type": "string" },
+        "patternMessage": { "type": "string" }
+      }
+    },
+    "UserGroupPermissionsSave": {
+      "required": [ "contentId" ],
+      "type": "object",
+      "properties": {
+        "contentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "permissions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "AssignedUserGroupPermissions": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/Permission" }
+          }
+        },
+        "defaultPermissions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/Permission" }
+          }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "checked": { "type": "boolean" },
+        "icon": { "type": "string" },
+        "permissionCode": { "type": "string" }
+      }
+    },
+    "PagedResult[ContentItemBasic[ContentPropertyBasic]]": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentItemBasic[ContentPropertyBasic]" }
+        },
+        "pageNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalItems": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ContentItemBasic[ContentPropertyBasic]": {
+      "required": [ "contentTypeAlias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentPropertyBasic" }
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "edited": { "type": "boolean" },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "variesByCulture": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "ContentPropertyBasic": {
+      "required": [ "id", "alias" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeKey": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "value": { "type": "object" },
+        "alias": { "type": "string" },
+        "editor": { "type": "string" },
+        "isSensitive": { "type": "boolean" },
+        "culture": { "type": "string" },
+        "segment": { "type": "string" }
+      }
+    },
+    "SimpleNotificationModel": {
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "message": { "type": "string" }
+      }
+    },
+    "ContentItemSave": {
+      "required": [ "id", "parentId", "contentTypeAlias", "action" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "variants": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentVariantSave" }
+        },
+        "contentTypeAlias": { "type": "string" },
+        "templateAlias": { "type": "string" },
+        "action": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+          "type": "integer"
+        }
+      }
+    },
+    "ContentVariantSave": {
+      "required": [ "name" ],
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentPropertyBasic" }
+        },
+        "culture": { "type": "string" },
+        "segment": { "type": "string" },
+        "save": { "type": "boolean" },
+        "publish": { "type": "boolean" },
+        "expireDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "releaseDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ContentSortOrder": {
+      "required": [ "parentId", "idSortOrder" ],
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "idSortOrder": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "MoveOrCopy": {
+      "required": [ "parentId", "id", "relateToOriginal", "recursive" ],
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "relateToOriginal": { "type": "boolean" },
+        "recursive": { "type": "boolean" }
+      }
+    },
+    "UnpublishContent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "cultures": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "ContentDomainsAndCulture": {
+      "type": "object",
+      "properties": {
+        "domains": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DomainDisplay" }
+        },
+        "language": { "type": "string" }
+      }
+    },
+    "DomainDisplay": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lang": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "duplicate": { "type": "boolean" },
+        "other": { "type": "string" }
+      }
+    },
+    "DomainSave": {
+      "type": "object",
+      "properties": {
+        "valid": { "type": "boolean" },
+        "nodeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "language": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "domains": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DomainDisplay" }
+        }
+      }
+    },
+    "NotifySetting": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "checked": { "type": "boolean" },
+        "notifyCode": { "type": "string" }
+      }
+    },
+    "RollbackVersion": {
+      "type": "object",
+      "properties": {
+        "versionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "versionDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "versionAuthorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "versionAuthorName": { "type": "string" }
+      }
+    },
+    "CountryViewModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": { "type": "string" }
+      }
+    },
+    "AnalysisViewModel": {
+      "type": "object",
+      "properties": {
+        "AnalysisType": { "type": "string" },
+        "DateOfPublication": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "MainCategoryTitle": { "type": "string" },
+        "MainContent": { "type": "string" },
+        "Title": { "type": "string" },
+        "PrimaryImageUrl": { "type": "string" }
+      }
+    },
+    "OrganisationViewModel": {
+      "type": "object",
+      "properties": {
+        "OrganisationTitle": { "type": "string" },
+        "PlatformLogo": { "type": "string" },
+        "OrganizationEmail": { "type": "string" }
+      }
+    },
+    "Incident": {
+      "type": "object",
+      "properties": {
+        "Title": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Areas": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "DateTimeForIncident": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Location": { "$ref": "#/definitions/Location" },
+        "MainContent": { "type": "string" },
+        "ThreatSubCategories": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "Lat": { "type": "string" },
+        "Long": { "type": "string" },
+        "FullAddress": { "type": "string" },
+        "PostalCode": { "type": "string" },
+        "City": { "type": "string" },
+        "State": { "type": "string" },
+        "Country": { "type": "string" }
+      }
+    },
+    "MenuItemCollection": {
+      "type": "object",
+      "properties": {
+        "defaultAlias": { "type": "string" },
+        "menuItems": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/MenuItem" },
+          "readOnly": true
+        }
+      }
+    },
+    "MenuItem": {
+      "required": [ "name", "alias" ],
+      "type": "object",
+      "properties": {
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "textDescription": { "type": "string" },
+        "separator": { "type": "boolean" },
+        "cssclass": { "type": "string" },
+        "opensDialog": { "type": "boolean" }
+      }
+    },
+    "SearchResultEntity": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "score": {
+          "format": "float",
+          "type": "number"
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "GetAvailableCompositionsFilter": {
+      "type": "object",
+      "properties": {
+        "ContentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "FilterPropertyTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "FilterContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "IsElement": { "type": "boolean" }
+      }
+    },
+    "CreatedContentTypeCollectionResult": {
+      "type": "object",
+      "properties": {
+        "collectionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "containerId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "DocumentTypeSave": {
+      "required": [ "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "allowedTemplates": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "defaultTemplate": { "type": "string" },
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyGroupBasic[PropertyTypeBasic]" }
+        },
+        "compositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "allowAsRoot": { "type": "boolean" },
+        "allowedContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "thumbnailIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "thumbnailFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blueprints": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PropertyGroupBasic[PropertyTypeBasic]": {
+      "required": [ "name" ],
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyTypeBasic" }
+        },
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": { "type": "string" }
+      }
+    },
+    "PropertyTypeBasic": {
+      "required": [ "alias", "label", "dataTypeId" ],
+      "type": "object",
+      "properties": {
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "validation": { "$ref": "#/definitions/PropertyTypeValidation" },
+        "label": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeKey": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "dataTypeName": { "type": "string" },
+        "dataTypeIcon": { "type": "string" },
+        "groupId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "labelOnTop": { "type": "boolean" }
+      }
+    },
+    "DocumentTypeDisplay": {
+      "required": [ "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "allowedTemplates": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EntityBasic" }
+        },
+        "defaultTemplate": { "$ref": "#/definitions/EntityBasic" },
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "apps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentApp" }
+        },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyGroupDisplay[PropertyTypeDisplay]" }
+        },
+        "listViewEditorName": { "type": "string" },
+        "allowedContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "compositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lockedCompositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "allowAsRoot": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "ModelState": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "thumbnailIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "thumbnailFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blueprints": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PropertyGroupDisplay[PropertyTypeDisplay]": {
+      "required": [ "name" ],
+      "type": "object",
+      "properties": {
+        "contentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "parentTabContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "parentTabContentTypeNames": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyTypeDisplay" }
+        },
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": { "type": "string" }
+      }
+    },
+    "PropertyTypeDisplay": {
+      "required": [ "alias", "label", "dataTypeId" ],
+      "type": "object",
+      "properties": {
+        "editor": { "type": "string" },
+        "view": { "type": "string" },
+        "config": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "locked": { "type": "boolean" },
+        "contentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contentTypeName": { "type": "string" },
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "validation": { "$ref": "#/definitions/PropertyTypeValidation" },
+        "label": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeKey": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "dataTypeName": { "type": "string" },
+        "dataTypeIcon": { "type": "string" },
+        "groupId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "labelOnTop": { "type": "boolean" }
+      }
+    },
+    "TemplateDisplay": {
+      "required": [ "name", "alias" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "content": { "type": "string" },
+        "path": { "type": "string" },
+        "virtualPath": { "type": "string" },
+        "masterTemplateAlias": { "type": "string" },
+        "isMasterTemplate": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        }
+      }
+    },
+    "ContentTypeImportModel": {
+      "type": "object",
+      "properties": {
+        "alias": { "type": "string" },
+        "name": { "type": "string" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" },
+          "readOnly": true
+        },
+        "tempFileName": { "type": "string" }
+      }
+    },
+    "UserTourStatus": {
+      "type": "object",
+      "properties": {
+        "alias": { "type": "string" },
+        "completed": { "type": "boolean" },
+        "disabled": { "type": "boolean" }
+      }
+    },
+    "ChangingPasswordModel": {
+      "type": "object",
+      "properties": {
+        "NewPassword": { "type": "string" },
+        "OldPassword": { "type": "string" },
+        "Reset": { "type": "boolean" },
+        "Answer": { "type": "string" },
+        "GeneratedPassword": { "type": "string" },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ModelWithNotifications[String]": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "string" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        }
+      }
+    },
+    "Tab[IDashboardSlim]": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "active": { "type": "boolean" },
+        "label": { "type": "string" },
+        "alias": { "type": "string" },
+        "open": { "type": "boolean" },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/IDashboardSlim" }
+        }
+      }
+    },
+    "IDashboardSlim": {
+      "type": "object",
+      "properties": {
+        "Alias": {
+          "type": "string",
+          "readOnly": true
+        },
+        "View": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "DataTypeDisplay": {
+      "required": [ "selectedEditor", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "selectedEditor": { "type": "string" },
+        "availableEditors": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyEditorBasic" }
+        },
+        "preValues": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DataTypeConfigurationFieldDisplay" }
+        },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "isSystem": { "type": "boolean" },
+        "group": { "type": "string" },
+        "hasPrevalues": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PropertyEditorBasic": {
+      "type": "object",
+      "properties": {
+        "alias": { "type": "string" },
+        "name": { "type": "string" },
+        "icon": { "type": "string" }
+      }
+    },
+    "DataTypeConfigurationFieldDisplay": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "hideLabel": { "type": "boolean" },
+        "view": { "type": "string" },
+        "config": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "key": { "type": "string" },
+        "value": { "type": "object" }
+      }
+    },
+    "DataTypeSave": {
+      "required": [ "action", "selectedEditor", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "action": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+          "type": "integer"
+        },
+        "selectedEditor": { "type": "string" },
+        "preValues": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DataTypeConfigurationFieldSave" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "DataTypeConfigurationFieldSave": {
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "value": { "type": "object" }
+      }
+    },
+    "DataTypeReferences": {
+      "type": "object",
+      "properties": {
+        "documentTypes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentTypeReferences" }
+        },
+        "mediaTypes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentTypeReferences" }
+        },
+        "memberTypes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentTypeReferences" }
+        }
+      }
+    },
+    "ContentTypeReferences": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "properties": { "type": "object" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "DataTypeBasic": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "isSystem": { "type": "boolean" },
+        "group": { "type": "string" },
+        "hasPrevalues": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "DictionarySave": {
+      "required": [ "name", "id" ],
+      "type": "object",
+      "properties": {
+        "nameIsDirty": { "type": "boolean" },
+        "translations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DictionaryTranslationSave" }
+        },
+        "parentId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "DictionaryTranslationSave": {
+      "type": "object",
+      "properties": {
+        "isoCode": { "type": "string" },
+        "translation": { "type": "string" },
+        "languageId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "DictionaryDisplay": {
+      "required": [ "name", "id" ],
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "parentId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "translations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DictionaryTranslationDisplay" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "DictionaryTranslationDisplay": {
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "isoCode": { "type": "string" },
+        "translation": { "type": "string" },
+        "languageId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "DictionaryOverviewDisplay": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "level": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "translations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DictionaryOverviewTranslationDisplay" }
+        }
+      }
+    },
+    "DictionaryOverviewTranslationDisplay": {
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "hasTranslation": { "type": "boolean" }
+      }
+    },
+    "TreeSearchResult": {
+      "type": "object",
+      "properties": {
+        "appAlias": { "type": "string" },
+        "treeAlias": { "type": "string" },
+        "jsSvc": { "type": "string" },
+        "jsMethod": { "type": "string" },
+        "results": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/SearchResultEntity" }
+        }
+      }
+    },
+    "AnchorsModel": {
+      "type": "object",
+      "properties": { "RteContent": { "type": "string" } }
+    },
+    "PagedResult[EntityBasic]": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EntityBasic" }
+        },
+        "pageNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalItems": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ExamineIndexModel": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "healthStatus": { "type": "string" },
+        "isHealthy": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "providerProperties": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "canRebuild": { "type": "boolean" }
+      }
+    },
+    "ExamineSearcherModel": {
+      "type": "object",
+      "properties": { "name": { "type": "string" } }
+    },
+    "SearchResults": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "results": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/SearchResult" }
+        }
+      }
+    },
+    "SearchResult": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "score": {
+          "format": "float",
+          "type": "number"
+        },
+        "fieldCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "HealthCheckAction": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "healthCheckId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "actionParameters": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "description": { "type": "string" },
+        "valueRequired": { "type": "boolean" },
+        "providedValue": { "type": "string" }
+      }
+    },
+    "HealthCheckStatus": {
+      "type": "object",
+      "properties": {
+        "message": { "type": "string" },
+        "description": { "type": "string" },
+        "view": { "type": "string" },
+        "resultType": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3 ],
+          "type": "integer"
+        },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/HealthCheckAction" }
+        }
+      }
+    },
+    "HelpPage": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "url": { "type": "string" },
+        "type": { "type": "string" }
+      }
+    },
+    "IconModel": {
+      "type": "object",
+      "properties": {
+        "Name": { "type": "string" },
+        "SvgString": { "type": "string" }
+      }
+    },
+    "DatabaseModel": {
+      "type": "object",
+      "properties": {
+        "dbType": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3 ],
+          "type": "integer"
+        },
+        "server": { "type": "string" },
+        "databaseName": { "type": "string" },
+        "login": { "type": "string" },
+        "password": { "type": "string" },
+        "integratedAuth": { "type": "boolean" },
+        "connectionString": { "type": "string" }
+      }
+    },
+    "InstallSetup": {
+      "type": "object",
+      "properties": {
+        "installId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/InstallSetupStep" }
+        }
+      }
+    },
+    "InstallSetupStep": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "view": { "type": "string" },
+        "model": { "type": "object" },
+        "description": { "type": "string" },
+        "serverOrder": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "Package": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "id": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "InstallInstructions": {
+      "type": "object",
+      "properties": {
+        "instructions": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "installId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "InstallProgressResultModel": {
+      "type": "object",
+      "properties": {
+        "view": { "type": "string" },
+        "complete": { "type": "boolean" },
+        "stepCompleted": { "type": "string" },
+        "nextStep": { "type": "string" },
+        "model": { "type": "object" }
+      }
+    },
+    "KeepAlivePingResult": {
+      "type": "object",
+      "properties": {
+        "Success": { "type": "boolean" },
+        "Message": { "type": "string" }
+      }
+    },
+    "PagedResult[AuditLog]": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/AuditLog" }
+        },
+        "pageNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalItems": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "AuditLog": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "userName": { "type": "string" },
+        "userAvatars": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "nodeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "logType": { "type": "string" },
+        "entityType": { "type": "string" },
+        "comment": { "type": "string" },
+        "parameters": { "type": "string" }
+      }
+    },
+    "LogLevelCounts": {
+      "type": "object",
+      "properties": {
+        "Information": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Debug": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Warning": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Error": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Fatal": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "LogTemplate": {
+      "type": "object",
+      "properties": {
+        "MessageTemplate": { "type": "string" },
+        "Count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PagedResult[LogMessage]": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/LogMessage" }
+        },
+        "pageNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalItems": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "LogMessage": {
+      "type": "object",
+      "properties": {
+        "Timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Level": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, 5 ],
+          "type": "integer"
+        },
+        "MessageTemplateText": { "type": "string" },
+        "RenderedMessage": { "type": "string" },
+        "Properties": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/LogEventPropertyValue" }
+        },
+        "Exception": { "type": "string" }
+      }
+    },
+    "LogEventPropertyValue": {
+      "type": "object",
+      "properties": {}
+    },
+    "SavedLogSearch": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "query": { "type": "string" }
+      }
+    },
+    "MacroParameter": {
+      "required": [ "alias", "view", "config" ],
+      "type": "object",
+      "properties": {
+        "alias": { "type": "string" },
+        "name": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "view": { "type": "string" },
+        "config": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "value": { "type": "object" }
+      }
+    },
+    "MacroParameterModel": {
+      "type": "object",
+      "properties": {
+        "MacroAlias": { "type": "string" },
+        "PageId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "MacroParams": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "CreatePartialViewMacroWithFileModel": {
+      "type": "object",
+      "properties": {
+        "Filename": { "type": "string" },
+        "VirtualPath": { "type": "string" }
+      }
+    },
+    "MacroDisplay": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" },
+          "readOnly": true
+        },
+        "useInEditor": { "type": "boolean" },
+        "renderInEditor": { "type": "boolean" },
+        "cachePeriod": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "cacheByPage": { "type": "boolean" },
+        "cacheByUser": { "type": "boolean" },
+        "view": { "type": "string" },
+        "parameters": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/MacroParameterDisplay" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MacroParameterDisplay": {
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "label": { "type": "string" },
+        "editor": { "type": "string" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "MediaItemDisplay": {
+      "required": [ "contentTypeAlias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "contentType": { "$ref": "#/definitions/ContentTypeBasic" },
+        "mediaLink": { "type": "string" },
+        "apps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentApp" }
+        },
+        "isChildOfListView": { "type": "boolean" },
+        "treeNodeUrl": { "type": "string" },
+        "contentTypeName": { "type": "string" },
+        "isContainer": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "ModelState": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "tabs": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Tab[ContentPropertyDisplay]" }
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "edited": { "type": "boolean" },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "variesByCulture": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MediaItemSave": {
+      "required": [ "action", "contentTypeAlias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "action": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+          "type": "integer"
+        },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentPropertyBasic" }
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "edited": { "type": "boolean" },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "variesByCulture": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PostedFolder": {
+      "type": "object",
+      "properties": {
+        "parentId": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "MediaTypeDisplay": {
+      "required": [ "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "isSystemMediaType": { "type": "boolean" },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyGroupDisplay[PropertyTypeDisplay]" }
+        },
+        "listViewEditorName": { "type": "string" },
+        "allowedContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "compositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lockedCompositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "allowAsRoot": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "ModelState": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "thumbnailIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "thumbnailFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blueprints": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MediaTypeSave": {
+      "required": [ "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyGroupBasic[PropertyTypeBasic]" }
+        },
+        "compositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "allowAsRoot": { "type": "boolean" },
+        "allowedContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "thumbnailIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "thumbnailFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blueprints": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PagedResult[MemberBasic]": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/MemberBasic" }
+        },
+        "pageNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalItems": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "MemberBasic": {
+      "required": [ "contentTypeAlias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentPropertyBasic" }
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "edited": { "type": "boolean" },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "variesByCulture": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MemberListDisplay": {
+      "required": [ "contentTypeAlias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "apps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentApp" }
+        },
+        "contentTypeName": { "type": "string" },
+        "isContainer": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "ModelState": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "tabs": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Tab[ContentPropertyDisplay]" }
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "edited": { "type": "boolean" },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "variesByCulture": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MemberDisplay": {
+      "required": [ "contentTypeAlias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "contentType": { "$ref": "#/definitions/ContentTypeBasic" },
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "membershipScenario": {
+          "format": "int32",
+          "enum": [ 0, 1, 2 ],
+          "type": "integer"
+        },
+        "fieldConfig": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "apps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentApp" }
+        },
+        "isChildOfListView": { "type": "boolean" },
+        "treeNodeUrl": { "type": "string" },
+        "contentTypeName": { "type": "string" },
+        "isContainer": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "ModelState": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "tabs": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Tab[ContentPropertyDisplay]" }
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "edited": { "type": "boolean" },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "variesByCulture": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MemberSave": {
+      "required": [ "username", "email", "action", "contentTypeAlias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "$ref": "#/definitions/ChangingPasswordModel" },
+        "memberGroups": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "comments": { "type": "string" },
+        "isLockedOut": { "type": "boolean" },
+        "isApproved": { "type": "boolean" },
+        "action": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+          "type": "integer"
+        },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentPropertyBasic" }
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "edited": { "type": "boolean" },
+        "owner": { "$ref": "#/definitions/UserProfile" },
+        "updater": { "$ref": "#/definitions/UserProfile" },
+        "contentTypeAlias": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4 ],
+          "type": "integer"
+        },
+        "variesByCulture": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MemberGroupDisplay": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MemberGroupSave": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "MemberTypeDisplay": {
+      "required": [ "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyGroupDisplay[MemberPropertyTypeDisplay]" }
+        },
+        "listViewEditorName": { "type": "string" },
+        "allowedContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "compositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lockedCompositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "allowAsRoot": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "ModelState": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "thumbnailIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "thumbnailFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blueprints": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PropertyGroupDisplay[MemberPropertyTypeDisplay]": {
+      "required": [ "name" ],
+      "type": "object",
+      "properties": {
+        "contentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "parentTabContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "parentTabContentTypeNames": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/MemberPropertyTypeDisplay" }
+        },
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": { "type": "string" }
+      }
+    },
+    "MemberPropertyTypeDisplay": {
+      "required": [ "alias", "label", "dataTypeId" ],
+      "type": "object",
+      "properties": {
+        "showOnMemberProfile": { "type": "boolean" },
+        "memberCanEdit": { "type": "boolean" },
+        "isSensitiveData": { "type": "boolean" },
+        "editor": { "type": "string" },
+        "view": { "type": "string" },
+        "config": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        },
+        "locked": { "type": "boolean" },
+        "contentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contentTypeName": { "type": "string" },
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "validation": { "$ref": "#/definitions/PropertyTypeValidation" },
+        "label": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeKey": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "dataTypeName": { "type": "string" },
+        "dataTypeIcon": { "type": "string" },
+        "groupId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "labelOnTop": { "type": "boolean" }
+      }
+    },
+    "MemberTypeSave": {
+      "required": [ "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PropertyGroupBasic[MemberPropertyTypeBasic]" }
+        },
+        "compositeContentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "isContainer": { "type": "boolean" },
+        "isElement": { "type": "boolean" },
+        "allowAsRoot": { "type": "boolean" },
+        "allowedContentTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "updateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "iconIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "iconFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "thumbnailIsClass": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "thumbnailFilePath": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blueprints": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PropertyGroupBasic[MemberPropertyTypeBasic]": {
+      "required": [ "name" ],
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/MemberPropertyTypeBasic" }
+        },
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": { "type": "string" }
+      }
+    },
+    "MemberPropertyTypeBasic": {
+      "required": [ "alias", "label", "dataTypeId" ],
+      "type": "object",
+      "properties": {
+        "showOnMemberProfile": { "type": "boolean" },
+        "memberCanEdit": { "type": "boolean" },
+        "isSensitiveData": { "type": "boolean" },
+        "inherited": { "type": "boolean" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": {
+          "pattern": "^([a-zA-Z]\\w.*)$",
+          "type": "string"
+        },
+        "description": { "type": "string" },
+        "validation": { "$ref": "#/definitions/PropertyTypeValidation" },
+        "label": { "type": "string" },
+        "sortOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataTypeKey": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "dataTypeName": { "type": "string" },
+        "dataTypeIcon": { "type": "string" },
+        "groupId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "allowCultureVariant": { "type": "boolean" },
+        "allowSegmentVariant": { "type": "boolean" },
+        "labelOnTop": { "type": "boolean" }
+      }
+    },
+    "PackageDefinition": {
+      "required": [ "name", "url", "version", "author", "authorUrl" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packageGuid": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "packagePath": { "type": "string" },
+        "version": { "type": "string" },
+        "umbracoVersion": { "$ref": "#/definitions/Version" },
+        "author": { "type": "string" },
+        "authorUrl": { "type": "string" },
+        "contributors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "license": { "type": "string" },
+        "licenseUrl": { "type": "string" },
+        "readme": { "type": "string" },
+        "contentLoadChildNodes": { "type": "boolean" },
+        "contentNodeId": { "type": "string" },
+        "macros": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "languages": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "dictionaryItems": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "templates": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "documentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "stylesheets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "files": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "packageView": { "type": "string" },
+        "actions": { "type": "string" },
+        "dataTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "iconUrl": { "type": "string" }
+      }
+    },
+    "Version": {
+      "type": "object",
+      "properties": {
+        "_Major": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "_Minor": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "_Build": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "_Revision": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "LocalPackageInstallModel": {
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" },
+          "readOnly": true
+        },
+        "isCompatible": { "type": "boolean" },
+        "umbracoVersion": { "type": "string" },
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "version": { "type": "string" },
+        "originalVersion": { "type": "string" },
+        "containsUnsecureFiles": { "type": "boolean" },
+        "containsTemplateConflicts": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "containsStyleSheetConflicts": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "containsMacroConflict": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "conflictingTemplateAliases": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "conflictingStyleSheetNames": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "conflictingMacroAliases": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "readme": { "type": "string" },
+        "licenseUrl": { "type": "string" },
+        "license": { "type": "string" },
+        "authorUrl": { "type": "string" },
+        "author": { "type": "string" },
+        "contributors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "iconUrl": { "type": "string" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packageGuid": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "zipFileName": { "type": "string" },
+        "isRestarting": { "type": "boolean" }
+      }
+    },
+    "PackageInstallModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packageGuid": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "zipFileName": { "type": "string" },
+        "isRestarting": { "type": "boolean" }
+      }
+    },
+    "PackageInstallResult": {
+      "type": "object",
+      "properties": {
+        "postInstallationPath": { "type": "string" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packageGuid": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "zipFileName": { "type": "string" },
+        "isRestarting": { "type": "boolean" }
+      }
+    },
+    "RedirectUrlSearchResult": {
+      "type": "object",
+      "properties": {
+        "searchResults": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ContentRedirectUrl" }
+        },
+        "totalCount": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ContentRedirectUrl": {
+      "type": "object",
+      "properties": {
+        "redirectId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "originalUrl": { "type": "string" },
+        "destinationUrl": { "type": "string" },
+        "createDateUtc": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "contentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "culture": { "type": "string" }
+      }
+    },
+    "RelationDisplay": {
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "parentName": { "type": "string" },
+        "childId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "childName": { "type": "string" },
+        "createDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "comment": { "type": "string" }
+      }
+    },
+    "PagedResult[RelationDisplay]": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/RelationDisplay" }
+        },
+        "pageNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalItems": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ObjectType": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "id": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "RelationTypeSave": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "isBidirectional": { "type": "boolean" },
+        "parentObjectType": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "childObjectType": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "RelationTypeDisplay": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "isSystemRelationType": { "type": "boolean" },
+        "isBidirectional": { "type": "boolean" },
+        "parentObjectType": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentObjectTypeName": { "type": "string" },
+        "childObjectType": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "childObjectTypeName": { "type": "string" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "RichTextEditorConfiguration": {
+      "type": "object",
+      "properties": {
+        "plugins": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/RichTextEditorPlugin" }
+        },
+        "commands": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/RichTextEditorCommand" }
+        },
+        "validElements": { "type": "string" },
+        "inValidElements": { "type": "string" },
+        "customConfig": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "RichTextEditorPlugin": {
+      "type": "object",
+      "properties": { "name": { "type": "string" } }
+    },
+    "RichTextEditorCommand": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "mode": {
+          "format": "int32",
+          "enum": [ 0, 1, 2 ],
+          "type": "integer"
+        }
+      }
+    },
+    "OEmbedResult": {
+      "type": "object",
+      "properties": {
+        "OEmbedStatus": {
+          "format": "int32",
+          "enum": [ 0, 1, 2 ],
+          "type": "integer"
+        },
+        "SupportsDimensions": { "type": "boolean" },
+        "Markup": { "type": "string" }
+      }
+    },
+    "Stylesheet": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "path": { "type": "string" }
+      }
+    },
+    "TagModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "text": { "type": "string" },
+        "group": { "type": "string" },
+        "nodeCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "QueryModel": {
+      "type": "object",
+      "properties": {
+        "ContentType": { "$ref": "#/definitions/ContentTypeModel" },
+        "Source": { "$ref": "#/definitions/SourceModel" },
+        "Filters": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/QueryCondition" }
+        },
+        "Sort": { "$ref": "#/definitions/SortExpression" },
+        "Take": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ContentTypeModel": {
+      "type": "object",
+      "properties": {
+        "Alias": { "type": "string" },
+        "Name": { "type": "string" }
+      }
+    },
+    "SourceModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": { "type": "string" }
+      }
+    },
+    "QueryCondition": {
+      "type": "object",
+      "properties": {
+        "Property": { "$ref": "#/definitions/PropertyModel" },
+        "Term": { "$ref": "#/definitions/OperatorTerm" },
+        "ConstraintValue": { "type": "string" }
+      }
+    },
+    "SortExpression": {
+      "type": "object",
+      "properties": {
+        "Property": { "$ref": "#/definitions/PropertyModel" },
+        "Direction": { "type": "string" }
+      }
+    },
+    "PropertyModel": {
+      "type": "object",
+      "properties": {
+        "Name": { "type": "string" },
+        "Alias": { "type": "string" },
+        "Type": { "type": "string" }
+      }
+    },
+    "OperatorTerm": {
+      "type": "object",
+      "properties": {
+        "Name": { "type": "string" },
+        "Operator": {
+          "format": "int32",
+          "enum": [ 1, 2, 3, 4, 5, 6, 7, 8 ],
+          "type": "integer"
+        },
+        "AppliesTo": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "QueryResultModel": {
+      "type": "object",
+      "properties": {
+        "QueryExpression": { "type": "string" },
+        "SampleResults": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TemplateQueryResult" }
+        },
+        "ResultCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "ExecutionTime": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Take": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "TemplateQueryResult": {
+      "type": "object",
+      "properties": {
+        "Icon": { "type": "string" },
+        "Name": { "type": "string" }
+      }
+    },
+    "BackOfficeTourFile": {
+      "type": "object",
+      "properties": {
+        "fileName": { "type": "string" },
+        "pluginName": { "type": "string" },
+        "tours": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/BackOfficeTour" }
+        }
+      }
+    },
+    "BackOfficeTour": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "alias": { "type": "string" },
+        "group": { "type": "string" },
+        "groupOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "hidden": { "type": "boolean" },
+        "allowDisable": { "type": "boolean" },
+        "requiredSections": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/BackOfficeTourStep" }
+        },
+        "culture": { "type": "string" },
+        "contentType": { "type": "string" }
+      }
+    },
+    "BackOfficeTourStep": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "type": { "type": "string" },
+        "element": { "type": "string" },
+        "elementPreventClick": { "type": "boolean" },
+        "backdropOpacity": {
+          "format": "float",
+          "type": "number"
+        },
+        "event": { "type": "string" },
+        "view": { "type": "string" },
+        "eventElement": { "type": "string" },
+        "customProperties": { "type": "object" },
+        "skipStepIfVisible": { "type": "string" }
+      }
+    },
+    "UpgradeCheckResponse": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "comment": { "type": "string" },
+        "url": { "type": "string" }
+      }
+    },
+    "UserViewModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": { "type": "string" },
+        "Email": { "type": "string" },
+        "Roles": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "ValidationToken": { "type": "string" },
+        "Organisation": { "$ref": "#/definitions/OrganisationViewModel" }
+      }
+    },
+    "UserGroupSave": {
+      "required": [ "action", "alias", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "action": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "sections": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "startContentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "startMediaId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "defaultPermissions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "assignedPermissions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "UserGroupDisplay": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/UserBasic" }
+        },
+        "defaultPermissions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/Permission" }
+          }
+        },
+        "assignedPermissions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/AssignedContentPermissions" }
+        },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "sections": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Section" }
+        },
+        "contentStartNode": { "$ref": "#/definitions/EntityBasic" },
+        "mediaStartNode": { "$ref": "#/definitions/EntityBasic" },
+        "userCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isSystemUserGroup": { "type": "boolean" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "UserBasic": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "emailHash": { "type": "string" },
+        "lastLoginDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "avatars": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "userState": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, -1 ],
+          "type": "integer"
+        },
+        "culture": { "type": "string" },
+        "email": { "type": "string" },
+        "userGroups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/UserGroupBasic" }
+        },
+        "isCurrentUser": { "type": "boolean" },
+        "notifications": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Notification" }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "AssignedContentPermissions": {
+      "required": [ "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/Permission" }
+          }
+        },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "PagedUserResult": {
+      "type": "object",
+      "properties": {
+        "userStates": {
+          "type": "object",
+          "properties": {
+            "Active": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "Disabled": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "LockedOut": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "Invited": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "Inactive": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "All": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/UserBasic" }
+        },
+        "pageNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalItems": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "UserInvite": {
+      "required": [ "userGroups", "email", "name", "id", "parentId" ],
+      "type": "object",
+      "properties": {
+        "userGroups": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "email": { "type": "string" },
+        "username": { "type": "string" },
+        "message": { "type": "string" },
+        "name": { "type": "string" },
+        "id": { "type": "object" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "UserSave": {
+      "required": [ "id", "username", "culture", "email", "userGroups", "name", "parentId" ],
+      "type": "object",
+      "properties": {
+        "changePassword": { "$ref": "#/definitions/ChangingPasswordModel" },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "username": { "type": "string" },
+        "culture": { "type": "string" },
+        "email": { "type": "string" },
+        "userGroups": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "startContentIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "startMediaIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "name": { "type": "string" },
+        "udi": { "type": "string" },
+        "icon": { "type": "string" },
+        "trashed": { "type": "boolean" },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "alias": { "type": "string" },
+        "path": { "type": "string" },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+    "uSyncSettings": {
+      "type": "object",
+      "properties": {
+        "SettingsFolder": { "type": "string" },
+        "RootFolder": { "type": "string" },
+        "UseFlatStructure": { "type": "boolean" },
+        "UseGuidNames": { "type": "boolean" },
+        "ImportAtStartup": { "type": "boolean" },
+        "ExportAtStartup": { "type": "boolean" },
+        "ExportOnSave": { "type": "boolean" },
+        "DefaultSet": { "type": "string" },
+        "HandlerSets": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/HandlerSet" }
+        },
+        "ReportDebug": { "type": "boolean" },
+        "AddOnPing": { "type": "boolean" },
+        "RebuildCacheOnCompletion": { "type": "boolean" },
+        "FailOnMissingParent": { "type": "boolean" },
+        "CacheFolderKeys": { "type": "boolean" },
+        "ShowVersionCheckWarning": { "type": "boolean" },
+        "CustomMappings": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "DefaultHandlerSettings": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "HandlerSet": {
+      "type": "object",
+      "properties": {
+        "Name": { "type": "string" },
+        "Enabled": { "type": "boolean" },
+        "Handlers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/HandlerSettings" }
+        }
+      }
+    },
+    "HandlerSettings": {
+      "type": "object",
+      "properties": {
+        "Alias": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Enabled": { "type": "boolean" },
+        "Actions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "UseFlatStructure": { "$ref": "#/definitions/OverriddenValue[Boolean]" },
+        "GuidNames": { "$ref": "#/definitions/OverriddenValue[Boolean]" },
+        "FailOnMissingParent": { "$ref": "#/definitions/OverriddenValue[Boolean]" },
+        "Settings": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "OverriddenValue[Boolean]": {
+      "type": "object",
+      "properties": {
+        "Value": { "type": "boolean" },
+        "IsOverridden": {
+          "type": "boolean",
+          "readOnly": true
+        }
+      }
+    },
+    "uSyncOptions": {
+      "type": "object",
+      "properties": {
+        "ClientId": { "type": "string" },
+        "Force": { "type": "boolean" },
+        "Clean": { "type": "boolean" },
+        "Group": { "type": "string" }
+      }
+    },
+    "uSyncAction": {
+      "type": "object",
+      "properties": {
+        "HandlerAlias": { "type": "string" },
+        "Success": { "type": "boolean" },
+        "ItemType": { "type": "string" },
+        "Message": { "type": "string" },
+        "Exception": { "type": "object" },
+        "Change": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, -2, -1 ],
+          "type": "integer"
+        },
+        "FileName": { "type": "string" },
+        "Name": { "type": "string" },
+        "RequiresPostProcessing": { "type": "boolean" },
+        "DetailMessage": { "type": "string" },
+        "Details": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/uSyncChange" }
+        },
+        "key": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "uSyncChange": {
+      "type": "object",
+      "properties": {
+        "Name": { "type": "string" },
+        "Path": { "type": "string" },
+        "OldValue": { "type": "string" },
+        "NewValue": { "type": "string" },
+        "Change": {
+          "format": "int32",
+          "enum": [ 0, 1, 2, 3, 4 ],
+          "type": "integer"
+        }
+      }
+    },
+    "AddOnInfo": {
+      "type": "object",
+      "properties": {
+        "Version": { "type": "string" },
+        "AddOnString": { "type": "string" },
+        "AddOns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ISyncAddOn" }
+        }
+      }
+    },
+    "ISyncAddOn": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Version": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Icon": {
+          "type": "string",
+          "readOnly": true
+        },
+        "View": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Alias": {
+          "type": "string",
+          "readOnly": true
+        },
+        "DisplayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "SortOrder": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        }
+      }
+    },
+    "uSyncVersionCheck": {
+      "type": "object",
+      "properties": {
+        "VersionInfo": { "$ref": "#/definitions/uSyncVersionInfo" },
+        "Remote": { "type": "boolean" },
+        "IsCurrent": { "type": "boolean" },
+        "HandlersLoaded": { "type": "boolean" }
+      }
+    },
+    "uSyncVersionInfo": {
+      "type": "object",
+      "properties": {
+        "Core": { "type": "string" },
+        "Complete": { "type": "string" },
+        "Link": { "type": "string" },
+        "Message": { "type": "string" }
+      }
+    },
+    "uSyncWarningMessage": {
+      "type": "object",
+      "properties": {
+        "Type": { "type": "string" },
+        "Message": { "type": "string" }
+      }
+    }
+  }
+}

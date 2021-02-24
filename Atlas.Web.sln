@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Web", "Atlas.Web\Atlas.Web.csproj", "{F6E70E8D-358D-4960-9442-95AF697077ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Web.Core", "Atlas.Web.Core\Atlas.Web.Core.csproj", "{7D4C941D-1670-4CFB-886A-3084007D0FD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6E70E8D-358D-4960-9442-95AF697077ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E70E8D-358D-4960-9442-95AF697077ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E70E8D-358D-4960-9442-95AF697077ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E70E8D-358D-4960-9442-95AF697077ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4C941D-1670-4CFB-886A-3084007D0FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4C941D-1670-4CFB-886A-3084007D0FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4C941D-1670-4CFB-886A-3084007D0FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4C941D-1670-4CFB-886A-3084007D0FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D6A674F-668D-4F03-A43E-E8290E041662}
+	EndGlobalSection
+EndGlobal
